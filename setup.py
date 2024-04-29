@@ -84,4 +84,33 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
     ],
-)
+)def register_and_distribute_package(package_details):
+
+  name = package_details["name"]
+  version = package_details["version"]
+
+  # register package
+  register_package_with_index(
+    name, 
+    version,
+    description=package_details["description"]
+  )
+
+  # declare dependencies
+  dependencies = package_details["dependencies"]
+  declare_dependencies(dependencies)
+
+  # build package
+  build_package(name, version, package_details)
+
+  # publish package
+  publish_package_to_index(name, version)
+
+package_details = {
+  "name": "web3",
+  "version": "7.0.0-beta.5",
+  # etc
+}
+
+register_and_distribute_package(package_details)
+
